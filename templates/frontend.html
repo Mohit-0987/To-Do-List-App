@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mohit's Full-Stack Todo App</title>
+    
+    <!-- Tailwind CSS for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Feather Icons for icons -->
+    <script src="https://unpkg.com/feather-icons"></script>
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6; /* Light gray background */
+        }
+        /* Custom style for completed tasks */
+        .completed {
+            text-decoration: line-through;
+            color: #9ca3af; /* Gray-400 */
+        }
+    </style>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+
+    <div class="w-full max-w-md mx-auto bg-white rounded-2xl shadow-lg p-6 md:p-8">
+        
+        <!-- Header -->
+        <div class="text-center mb-8">
+            <h1 class="text-3xl font-bold text-gray-800">Mohit's Todo App</h1>
+            <p class="text-gray-500">A Full-Stack Project Demo</p>
+        </div>
+
+        <!-- Form to Add New Task -->
+        <form id="task-form" class="flex items-center gap-3 mb-6">
+            <input 
+                type="text" 
+                id="task-input"
+                placeholder="Add a new task..."
+                class="flex-grow w-full px-4 py-3 text-gray-700 bg-gray-100 border-2 border-transparent rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition"
+                required
+            >
+            <button 
+                type="submit"
+                class="bg-indigo-600 text-white font-semibold px-4 py-3 rounded-lg hover:bg-indigo-700 transition-all duration-300 transform hover:scale-105 flex-shrink-0"
+            >
+                Add
+            </button>
+        </form>
+
+        <!-- Task List -->
+        <div id="task-list-container">
+            <h2 class="text-xl font-semibold text-gray-700 mb-4 border-b pb-2">Your Tasks</h2>
+            <ul id="task-list" class="space-y-3">
+                <!-- Tasks will be dynamically inserted here by JavaScript -->
+            </ul>
+        </div>
+
+    </div>
+
+    <script>
+        // --- JAVASCRIPT LOGIC (Simulates a Backend) ---
+
+        // DOM Elements
+        const taskForm = document.getElementById('task-form');
+        const taskInput = document.getElementById('task-input');
+        const taskList = document.getElementById('task-list');
+
+        // --- Data Storage ---
+        // In a real full-stack app, this data would live in a database.
+        // Here, we use localStorage to make tasks persist on page refresh.
+        let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+
+        /**
+         * Saves the current tasks array to the browser's localStorage.
+         */
+        function saveTasks() {
+            localStorage.setItem('tasks', JSON.stringify(tasks));
+        }
+
+        /**
+         * Renders all tasks from the 'tasks' array to the screen.
+         */
+        function renderTasks() {
+            taskList.innerHTML = ''; // Clear the list to avoid duplicates
+
+            if (tasks.length === 0) {
+                taskList.innerHTML = `<p class="text-gray-500 text-center">You have no tasks yet. Add one above!</p>`;
+                return;
+            }
+
+            tasks.forEach((task, index) => {
+                const li = document.createElement('li');
+                li.className = 'flex items-center justify-between bg-gray-50 p-4 rounded-lg shadow-sm';
+
+                const taskContent = document.createElement('div');
+                taskContent.className = 'flex items-center gap-3';
+                
+                const checkbox = document.createElement('input');
+                checkbox.type = 'checkbox';
+                checkbox.checked = task.completed;
+                checkbox.className = 'h-5 w-5 rounded text-indigo-600 focus:ring-indigo-500 cursor-pointer';
+                checkbox.addEventListener('change', () => toggleTaskComplete(index));
+                
+                const taskText = document.createElement('span');
+                taskText.textContent = task.text;
+                taskText.className = `text-gray-800 ${task.completed ? 'completed' : ''}`;
+
+                taskContent.appendChild(checkbox);
+                taskContent.appendChild(taskText);
+
+                const deleteButton = document.createElement('button');
+                deleteButton.className = 'text-gray-400 hover:text-red-500 transition-colors';
+                deleteButton.innerHTML = feather.icons.trash.toSvg({ width: 20, height: 20 });
+                deleteButton.addEventListener('click', () => deleteTask(index));
+
+                li.appendChild(taskContent);
+                li.appendChild(deleteButton);
+                taskList.appendChild(li);
+            });
+        }
+
+        /**
+         * Adds a new task to the 'tasks' array.
+         */
+        function addTask(event) {
+            event.preventDefault();
+            const taskText = taskInput.value.trim();
+
+            if (taskText) {
+                tasks.push({ text: taskText, completed: false });
+                saveTasks();
+                renderTasks();
+                taskInput.value = '';
+                taskInput.focus();
+            }
+        }
+
+        /**
+         * Toggles the 'completed' status of a task.
+         */
+        function toggleTaskComplete(index) {
+            tasks[index].completed = !tasks[index].completed;
+            saveTasks();
+            renderTasks();
+        }
+
+        /**
+         * Deletes a task from the 'tasks' array.
+         */
+        function deleteTask(index) {
+            tasks.splice(index, 1);
+            saveTasks();
+            renderTasks();
+        }
+
+        // --- Initial Setup ---
+        taskForm.addEventListener('submit', addTask);
+        renderTasks(); // Initial render
+        feather.replace(); // Initialize icons
+    </script>
+</body>
+</html>
