@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mohit's Full-Stack Todo App</title>
+    <title>Mohit's Full-Stack Todo App (Flask)</title>
     
     <!-- Tailwind CSS for styling -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -11,7 +11,7 @@
     <!-- Google Fonts: Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     
     <!-- Feather Icons for icons -->
     <script src="https://unpkg.com/feather-icons"></script>
@@ -35,7 +35,8 @@
         <!-- Header -->
         <div class="text-center mb-8">
             <h1 class="text-3xl font-bold text-gray-800">Mohit's Todo App</h1>
-            <p class="text-gray-500">A Full-Stack Project Demo</p>
+            <!-- THIS IS THE LINE I CHANGED -->
+            <p class="text-gray-500">Create and manage your tasks</p>
         </div>
 
         <!-- Form to Add New Task -->
@@ -66,77 +67,79 @@
     </div>
 
     <script>
-        // --- JAVASCRIPT LOGIC (Simulates a Backend) ---
+        // --- JAVASCRIPT FRONTEND LOGIC ---
 
         // DOM Elements
         const taskForm = document.getElementById('task-form');
         const taskInput = document.getElementById('task-input');
         const taskList = document.getElementById('task-list');
 
-        // --- Data Storage ---
-        // In a real full-stack app, this data would live in a database.
-        // Here, we use localStorage to make tasks persist on page refresh.
-        let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+        // By leaving this empty, the browser will automatically use the same host and port.
+        const API_URL = '';
 
         /**
-         * Saves the current tasks array to the browser's localStorage.
+         * Fetches tasks from the backend and renders them.
          */
-        function saveTasks() {
-            localStorage.setItem('tasks', JSON.stringify(tasks));
-        }
+        async function renderTasks() {
+            try {
+                const response = await fetch(`${API_URL}/tasks`);
+                const tasks = await response.json();
+                
+                taskList.innerHTML = ''; // Clear the list
 
-        /**
-         * Renders all tasks from the 'tasks' array to the screen.
-         */
-        function renderTasks() {
-            taskList.innerHTML = ''; // Clear the list to avoid duplicates
+                if (tasks.length === 0) {
+                    taskList.innerHTML = `<p class="text-gray-500 text-center">You have no tasks yet. Add one above!</p>`;
+                    return;
+                }
 
-            if (tasks.length === 0) {
-                taskList.innerHTML = `<p class="text-gray-500 text-center">You have no tasks yet. Add one above!</p>`;
-                return;
+                tasks.forEach(task => {
+                    const li = document.createElement('li');
+                    li.className = 'flex items-center justify-between bg-gray-50 p-4 rounded-lg shadow-sm';
+
+                    const taskContent = document.createElement('div');
+                    taskContent.className = 'flex items-center gap-3';
+                    
+                    const checkbox = document.createElement('input');
+                    checkbox.type = 'checkbox';
+                    checkbox.checked = task.completed;
+                    checkbox.className = 'h-5 w-5 rounded text-indigo-600 focus:ring-indigo-500 cursor-pointer';
+                    checkbox.addEventListener('change', () => toggleTaskComplete(task.id, !task.completed));
+                    
+                    const taskText = document.createElement('span');
+                    taskText.textContent = task.text;
+                    taskText.className = `text-gray-800 ${task.completed ? 'completed' : ''}`;
+
+                    taskContent.appendChild(checkbox);
+                    taskContent.appendChild(taskText);
+
+                    const deleteButton = document.createElement('button');
+                    deleteButton.className = 'text-gray-400 hover:text-red-500 transition-colors';
+                    deleteButton.innerHTML = feather.icons.trash.toSvg({ width: 20, height: 20 });
+                    deleteButton.addEventListener('click', () => deleteTask(task.id));
+
+                    li.appendChild(taskContent);
+                    li.appendChild(deleteButton);
+                    taskList.appendChild(li);
+                });
+            } catch (error) {
+                console.error('Error fetching tasks:', error);
+                taskList.innerHTML = `<p class="text-red-500 text-center">Error: Could not connect to the backend server.</p>`;
             }
-
-            tasks.forEach((task, index) => {
-                const li = document.createElement('li');
-                li.className = 'flex items-center justify-between bg-gray-50 p-4 rounded-lg shadow-sm';
-
-                const taskContent = document.createElement('div');
-                taskContent.className = 'flex items-center gap-3';
-                
-                const checkbox = document.createElement('input');
-                checkbox.type = 'checkbox';
-                checkbox.checked = task.completed;
-                checkbox.className = 'h-5 w-5 rounded text-indigo-600 focus:ring-indigo-500 cursor-pointer';
-                checkbox.addEventListener('change', () => toggleTaskComplete(index));
-                
-                const taskText = document.createElement('span');
-                taskText.textContent = task.text;
-                taskText.className = `text-gray-800 ${task.completed ? 'completed' : ''}`;
-
-                taskContent.appendChild(checkbox);
-                taskContent.appendChild(taskText);
-
-                const deleteButton = document.createElement('button');
-                deleteButton.className = 'text-gray-400 hover:text-red-500 transition-colors';
-                deleteButton.innerHTML = feather.icons.trash.toSvg({ width: 20, height: 20 });
-                deleteButton.addEventListener('click', () => deleteTask(index));
-
-                li.appendChild(taskContent);
-                li.appendChild(deleteButton);
-                taskList.appendChild(li);
-            });
         }
 
         /**
-         * Adds a new task to the 'tasks' array.
+         * Sends a new task to the backend.
          */
-        function addTask(event) {
+        async function addTask(event) {
             event.preventDefault();
             const taskText = taskInput.value.trim();
 
             if (taskText) {
-                tasks.push({ text: taskText, completed: false });
-                saveTasks();
+                await fetch(`${API_URL}/add_task`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ text: taskText })
+                });
                 renderTasks();
                 taskInput.value = '';
                 taskInput.focus();
@@ -144,20 +147,24 @@
         }
 
         /**
-         * Toggles the 'completed' status of a task.
+         * Tells the backend to update a task's completion status.
          */
-        function toggleTaskComplete(index) {
-            tasks[index].completed = !tasks[index].completed;
-            saveTasks();
+        async function toggleTaskComplete(id, completed) {
+            await fetch(`${API_URL}/update_task/${id}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ completed: completed })
+            });
             renderTasks();
         }
 
         /**
-         * Deletes a task from the 'tasks' array.
+         * Tells the backend to delete a task.
          */
-        function deleteTask(index) {
-            tasks.splice(index, 1);
-            saveTasks();
+        async function deleteTask(id) {
+            await fetch(`${API_URL}/delete_task/${id}`, {
+                method: 'DELETE'
+            });
             renderTasks();
         }
 
