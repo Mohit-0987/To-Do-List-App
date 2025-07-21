@@ -1,6 +1,14 @@
-# Todo List Application
+# Full-Stack Todo List Application
 
 A simple, clean, and functional todo list web application built with a Python Flask backend and a vanilla JavaScript frontend.
+
+## Live Demo
+
+You can view the live, deployed version of this application here:
+
+**[https://your-project-name.onrender.com](https://your-project-name.onrender.com)**
+
+*(Note: Please replace the link above with your actual public URL from Render after you deploy the project.)*
 
 ## Features
 
@@ -21,11 +29,11 @@ A simple, clean, and functional todo list web application built with a Python Fl
   - Flask (as the web framework and API server)
   - Gunicorn (as the production web server)
 - **Deployment:**
-  - Render / Heroku / PythonAnywhere
+  - Render
 
-## Installation and Setup
+## Local Installation and Setup
 
-To run this project on your local machine, please follow these steps:
+For developers who wish to run this project on their local machine, please follow these steps:
 
 1.  **Clone the Repository**
     ```bash
@@ -57,7 +65,7 @@ To run this project on your local machine, please follow these steps:
     ```
 
 5.  **View the Application**
-    Open your web browser and navigate to:
+    Open your web browser and navigate to the local development server:
     ```
     [http://127.0.0.1:5000](http://127.0.0.1:5000)
     ```
