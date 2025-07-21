@@ -1,4 +1,4 @@
-# Full-Stack Todo List Application
+# Todo List Web Application
 
 A simple, clean, and functional todo list web application built with a Python Flask backend and a vanilla JavaScript frontend.
 
@@ -6,9 +6,7 @@ A simple, clean, and functional todo list web application built with a Python Fl
 
 You can view the live, deployed version of this application here:
 
-**[Mohit's Todo App]([https://your-project-name.onrender.com](https://mohit-to-do-list-app.onrender.com/))**
-
-*(Note: Please replace the link above with your actual public URL from Render after you deploy the project.)*
+**[Mohit's Todo App](https://mohit-to-do-list-app.onrender.com/)**
 
 ## Features
 
