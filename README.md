@@ -1,4 +1,3 @@
-# To-Do-List-App
 # Full-Stack Todo List Application
 
 A simple, clean, and functional todo list web application built with a Python Flask backend and a vanilla JavaScript frontend.
