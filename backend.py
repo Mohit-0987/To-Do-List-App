@@ -1,5 +1,4 @@
 # Import necessary libraries from Flask
-# We add 'render_template' to serve our HTML file.
 from flask import Flask, request, jsonify, render_template
 from flask_cors import CORS
 
@@ -10,14 +9,12 @@ app = Flask(__name__)
 CORS(app)
 
 # --- In-Memory Data Storage ---
-tasks = [
-    {"id": 1, "text": "Learn Flask basics", "completed": True},
-    {"id": 2, "text": "Build a simple API", "completed": False},
-    {"id": 3, "text": "Connect frontend to backend", "completed": False}
-]
-next_id = 4
+# We now start with an empty list so the user begins with a clean slate.
+tasks = []
+# The ID for the first task will now be 1.
+next_id = 1
 
-# --- NEW: Route for the Homepage ---
+# --- Route for the Homepage ---
 @app.route('/')
 def home():
     """
@@ -71,7 +68,8 @@ def delete_task(task_id):
         return jsonify({"success": "Task deleted"})
     return jsonify({"error": "Task not found"}), 404
 
-# This is the standard entry point for a Flask application.
+# When deploying to a service like Render, the server is started by Gunicorn,
+# so this __main__ block is not strictly necessary for production but is good practice to keep.
 if __name__ == '__main__':
-    app.run(debug=True)
-
+    # The production server (Gunicorn) will be used instead of this.
+    app.run(debug=False)
