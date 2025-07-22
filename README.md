@@ -2,8 +2,6 @@
 
 A simple, clean, and functional todo list web application built with a Python Flask backend and a vanilla JavaScript frontend.
 
-## Live Demo
-
 You can view the live, deployed version of this application here:
 # [Mohit's Todo App](https://mohit-to-do-list-app.onrender.com/) 📝
 
