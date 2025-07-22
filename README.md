@@ -5,8 +5,7 @@ A simple, clean, and functional todo list web application built with a Python Fl
 ## Live Demo
 
 You can view the live, deployed version of this application here:
-
-**[Mohit's Todo App](https://mohit-to-do-list-app.onrender.com/)**
+# [Mohit's Todo App](https://mohit-to-do-list-app.onrender.com/) 📝
 
 ## Features
 
