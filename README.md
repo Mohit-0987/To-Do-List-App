@@ -2,8 +2,7 @@
 
 A simple, clean, and functional todo list web application built with a Python Flask backend and a vanilla JavaScript frontend.
 
-# Test my application [Mohit's Todo App](https://mohit-to-do-list-app.onrender.com/) 📝
-
+# Test my application <a href="https://mohit-to-do-list-app.onrender.com/" target="_blank" rel="noopener noreferrer">Mohit's Todo App</a> 📝
 
 ## Features
 
@@ -35,6 +34,7 @@ For developers who wish to run this project on their local machine, please follo
     git clone [https://github.com/your-username/your-repo-name.git](https://github.com/your-username/your-repo-name.git)
     cd your-repo-name
     ```
+    **(Note: Remember to replace the placeholder URL with your actual GitHub repository link here.)**
 
 2.  **Create a Virtual Environment**
     It's recommended to use a virtual environment to keep project dependencies separate.
