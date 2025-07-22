@@ -2,7 +2,7 @@
 
 A simple, clean, and functional todo list web application built with a Python Flask backend and a vanilla JavaScript frontend.
 
-# Test my application <a href="https://mohit-to-do-list-app.onrender.com/" target="_blank" rel="noopener noreferrer">Mohit's Todo App</a> 📝
+###  [Test My Todo App](https://mohit-to-do-list-app.onrender.com/) 📝
 
 ## Features
 
