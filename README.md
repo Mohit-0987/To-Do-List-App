@@ -2,12 +2,7 @@
 
 A simple, clean, and persistent Todo list application built with a Python Flask backend, vanilla JavaScript frontend, and a serverless Redis database (Vercel KV). The entire application is designed for and deployed on Vercel.
 
-### [**Live Demo**](https://your-vercel-url-here.vercel.app/)
 
-**(Remember to replace the link above with your actual Vercel deployment URL!)**
-
-![Todo App Screenshot](https://i.imgur.com/gKj3n4G.png)
-*(Pro tip: Replace this image with a screenshot of your own running application!)*
 
 ---
 
