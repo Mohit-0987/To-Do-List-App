@@ -8,7 +8,7 @@ A clean, modern, and persistent To-Do list application built with Python, Flask,
 
 > **This website can take up to 30 seconds to load initially. Please be patient.**
 
-This delay is because the application is hosted on a free-tier service (like Render or Heroku). These services put applications to "sleep" after a period of inactivity to conserve resources. The first request will "wake up" the application, causing a one-time startup delay.
+This delay is because the application is hosted on a free-tier service (render). These services put applications to "sleep" after a period of inactivity to conserve resources. The first request will "wake up" the application, causing a one-time startup delay.
 
 ---
 
