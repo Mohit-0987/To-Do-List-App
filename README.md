@@ -1,88 +1,67 @@
-# To-do Application
+# Flask & SQLite To-Do List App 📝
 
-A simple, clean, and persistent Todo list application built with a Python Flask backend, vanilla JavaScript frontend, and a serverless Redis database (Vercel KV). The entire application is designed for and deployed on Vercel.
+A clean, modern, and persistent To-Do list application built with Python, Flask, and SQLite. The frontend is styled with Tailwind CSS for a responsive and attractive user interface.
 
+---
 
+### ⚠️ A Note on Loading Time
+
+> **This website can take up to 30 seconds to load initially. Please be patient.**
+
+This delay is because the application is hosted on a free-tier service (like Render or Heroku). These services put applications to "sleep" after a period of inactivity to conserve resources. The first request will "wake up" the application, causing a one-time startup delay.
 
 ---
 
 ## ✨ Features
 
-* **Add Tasks:** Quickly add new tasks to your list.
-* **Complete Tasks:** Mark tasks as complete with a satisfying line-through.
-* **Delete Tasks:** Remove tasks you no longer need.
-* **Persistent Storage:** Your tasks are saved in a cloud database, so they won't disappear when you close the browser.
-* **Clean UI:** A modern and responsive interface built with Tailwind CSS.
+* **Add Tasks**: Quickly add new tasks to your list.
+* **View Tasks**: See all your current tasks in a clean layout.
+* **Mark as Complete**: Click the checkbox to mark tasks as done.
+* **Delete Tasks**: Remove tasks you no longer need.
+* **Persistent Storage**: Uses an SQLite database to save your tasks, so they are not lost when the server restarts.
+* **Responsive Design**: Looks great on both desktop and mobile devices.
+* **Modern UI**: Features smooth animations and a visually appealing design.
 
 ---
 
 ## 🛠️ Tech Stack
 
-* **Frontend:** HTML5, Tailwind CSS, Vanilla JavaScript
-* **Backend:** Python with Flask
-* **Database:** Vercel KV (Serverless Redis)
-* **Deployment:** Vercel
+* **Backend**: Python, Flask
+* **Database**: SQLite
+* **Frontend**: HTML, Tailwind CSS, JavaScript
+* **Deployment Server**: Gunicorn
 
 ---
 
-## 🚀 Deployment
+## 🚀 How to Run Locally
 
-This project is configured for easy deployment on Vercel.
+Follow these steps to get the application running on your local machine.
 
-1.  **Push to GitHub:** After creating the project with the specified file structure, push it to a GitHub repository.
-2.  **Import to Vercel:** Import the repository into your Vercel dashboard. Vercel will automatically detect the configuration in `vercel.json`.
-3.  **Connect Vercel KV:** In the project's **Storage** tab on Vercel, create and connect a new KV database. Vercel will handle the environment variables needed to connect.
-4.  **Deploy!** Trigger a deployment. Your application will be live.
-
----
-
-## 🖥️ Running the Project Locally
-
-To run this application on your local machine, follow these steps.
-
-1.  **Clone the Repository:**
+1.  **Clone the repository:**
     ```bash
-    git clone [https://github.com/your-username/your-repo-name.git](https://github.com/your-username/your-repo-name.git)
-    cd your-repo-name
+    git clone [https://github.com/your-username/your-repository-name.git](https://github.com/your-username/your-repository-name.git)
+    cd your-repository-name
     ```
 
-2.  **Create and Activate a Python Virtual Environment:**
-    * **On macOS/Linux:**
-        ```bash
-        python3 -m venv venv
-        source venv/bin/activate
-        ```
-    * **On Windows:**
-        ```bash
-        python -m venv venv
-        .\venv\Scripts\activate
-        ```
+2.  **Create and activate a virtual environment (recommended):**
+    ```bash
+    # For macOS/Linux
+    python3 -m venv venv
+    source venv/bin/activate
 
-3.  **Install Dependencies:**
+    # For Windows
+    py -m venv venv
+    venv\Scripts\activate
+    ```
+
+3.  **Install the required packages:**
     ```bash
     pip install -r requirements.txt
     ```
 
-4.  **Set Up Environment Variables for Vercel KV:**
-    To connect to your Vercel KV database locally, you need to pull the environment variables from your Vercel project. First, install the Vercel CLI:
+4.  **Run the Flask application:**
     ```bash
-    npm install -g vercel
-    ```
-    Then log in and link your project:
-    ```bash
-    vercel login
-    vercel link
-    ```
-    Finally, pull the environment variables into a `.env` file:
-    ```bash
-    vercel env pull .env.local
-    ```
-    The `vercel-kv` library will automatically use these variables.
-
-5.  **Run the Flask App:**
-    ```bash
-    flask run
+    python to-do.py
     ```
 
-6.  **View in Browser:**
-    Open your web browser and navigate to `http://127.0.0.1:5000`. You should see the application running and connected to your cloud database.
+5.  Open your web browser and navigate to `http://127.0.0.1:5000`. The `todo.db` database file will be created automatically in the project directory.
