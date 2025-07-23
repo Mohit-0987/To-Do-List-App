@@ -9,9 +9,15 @@ import os
 app = Flask(__name__)
 CORS(app)
 
-# Create an instance of the KV client
-# This line reads the secret keys from the Vercel Environment Variables
-kv_store = KV()
+# --- Manual Override for Debugging ---
+# Replace the placeholder text with the actual values from your Vercel settings.
+kv_store = KV(
+    url="rediss://default:AeyrAAIjcDE5YTNhMWMwYzU5ZTM0MTQyODZlZWM2ZDY2NzRjMjRkOXAxMA@measured-silkworm-60587.upstash.io:6379",
+    rest_api_url="https://measured-silkworm-60587.upstash.io",
+    rest_api_token="AeyrAAIjcDE5YTNhMWMwYzU5ZTM0MTQyODZlZWM2ZDY2NzRjMjRkOXAxMA",
+    rest_api_read_only_token="AuyrAAIgcDFXBwNL0AyqnmF7FTvvd72iSEH18zvZ2V8z3YfEFELgNw"
+)
+
 
 # --- Route for the Homepage ---
 @app.route('/')
