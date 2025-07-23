@@ -9,6 +9,7 @@ app = Flask(__name__)
 
 def get_db_connection():
     """Establishes a connection to the database."""
+    # The database file will be created in the instance folder on Render
     conn = sqlite3.connect('todo.db')
     # This allows accessing columns by name (like a dictionary)
     conn.row_factory = sqlite3.Row
@@ -27,10 +28,6 @@ def init_db():
     ''')
     conn.commit()
     conn.close()
-
-
-# --- The in-memory list has been REMOVED ---
-# We now use the SQLite database for storage.
 
 
 ## --- HTML Rendering ---
@@ -119,6 +116,10 @@ def delete_task(task_id):
 
 # --- Main Execution Block ---
 
+# Initialize the database as soon as the application starts.
+# This ensures the table is created in the production environment.
+init_db()
+
 if __name__ == '__main__':
-    init_db()  # Initialize the database when the app starts
+    # This block is only for running the app locally for development
     app.run(debug=True)
