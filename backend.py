@@ -3,33 +3,20 @@ from flask import Flask, request, jsonify, render_template
 from flask_cors import CORS
 from vercel_kv import KV
 import time
-import os # <-- Import the 'os' module
+import os
 
 # Create a Flask application instance
 app = Flask(__name__)
-# Enable Cross-Origin Resource Sharing (CORS)
 CORS(app)
 
-# --- START OF DEBUGGING CODE ---
-# We will print the environment variables to the Vercel logs.
-print("--- Vercel KV Environment Variable Check ---")
-print(f"KV_URL: {os.environ.get('KV_URL')}")
-print(f"KV_REST_API_URL: {os.environ.get('KV_REST_API_URL')}")
-print(f"KV_REST_API_TOKEN: {os.environ.get('KV_REST_API_TOKEN')}")
-print(f"KV_REST_API_READ_ONLY_TOKEN: {os.environ.get('KV_REST_API_READ_ONLY_TOKEN')}")
-print("--- End of Check ---")
-# --- END OF DEBUGGING CODE ---
-
-# This is the line that is currently failing.
-# It will still fail, but the logs before it will give us the information we need.
+# Create an instance of the KV client
+# This line reads the secret keys from the Vercel Environment Variables
 kv_store = KV()
-
 
 # --- Route for the Homepage ---
 @app.route('/')
 def home():
     return render_template('frontend.html')
-
 
 # --- API Endpoints ---
 @app.route('/tasks', methods=['GET'])
